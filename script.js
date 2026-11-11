@@ -3514,7 +3514,7 @@ H.prof = async () => {
     await sayAll(['정박사: 오, 왔구나! 나는 사계몬을 연구하는 정박사란다.', '이 세계의 사계몬은 트레이너가 문제를 맞혀야만 기술을 쓸 수 있지.\n사계볼을 던질 때도, 아이템을 쓸 때도 마찬가지란다!', '사계절 체육관 8곳을 돌며 중학교 수학을 복습하면\n졸업 언덕의 챔피언에 도전할 수 있어.', '자, 테이블 위의 사계볼 중 하나를 골라 보렴!']);
     S.flags.profTalked = 1; return;
   }
-  if (S.badges[7] && !S.flags.mball) { S.flags.mball = 1; await sayAll(['정박사: 배지 8개라니! 정말 장하구나.', '이건 내가 연구하던 특별한 볼이란다. 문제만 맞히면 무조건 잡히지!']); return giveItem('mball', 1); }
+  // (예전 바탕 파일: 배지 8개면 '무조건 잡히는 볼'을 줬음 → 히든 몬스터 잡기가 너무 쉬워져 2026-11-11 지움)
   if (S.champ && !S.keys.sfeather) { await sayAll(['정박사: 챔피언이 되었다고? 이건 은빛 깃털이란다.', '바닷길 한가운데 동굴 깊은 곳에서 무언가가 기다린다는 전설이 있지.']); return giveKey('sfeather'); }
   const n = Object.keys(S.caught).length;
   return sayAll([`정박사: 도감에 ${n}종이 등록됐구나!`, n < 20 ? '여러 지역의 풀숲과 물가를 돌아다니며 다양한 사계몬을 만나 보렴.' : '훌륭해! 도감 연구가들이 너를 보면 기뻐할 거야.']);
@@ -3577,8 +3577,9 @@ H.leader = async e => {
   const n = e.n, G = GYMS[n];
   const mkTeam = () => G.team.map(([sp, lv]) => mkMon(sp, lv, false, HPMUL.leader));
   const tr = { title: '관장', name: G.name, pal: 'L' + n, lose: G.win };
-  if (S.badges[n] || (n === 7 && S.flags.denTrial)) {
-    if (n === 7 && !S.badges[7]) return say('관장 운수: 확률의 굴 장로님의 시험을 통과하고 와! 그래야 배지를 줄 수 있어.');
+  // 2026-11-11 고침: 예전 바탕 파일은 체육관 8을 이기면 배지 대신 '확률의 굴 장로 시험'을 보냈다(denTrial). 이미 이긴 저장은 말을 걸면 바로 배지
+  if (n === 7 && S.flags.denTrial && !S.badges[7]) { delete S.flags.denTrial; await say(`관장 ${G.name}: 아까 승부는 네가 이겼어. 약속대로 배지를 줄게!`); await awardBadge(7); return; }
+  if (S.badges[n]) {
     await say(`관장 ${G.name}: 또 왔구나! 복습 삼아 한 번 더 붙어 볼래?`, { wait: false });
     if (!await yesno()) return say(`관장 ${G.name}: ${G.after || '언제든 다시 와!'}`);
     await battle({ kind: 'leader', team: mkTeam(), trainer: tr, money: 0, unit: G.lunit ?? G.unit });
@@ -3594,7 +3595,6 @@ H.leader = async e => {
     await sayAll(['보건 선생님: 관장님께 졌다고 실망하지 마세요. 거의 다 왔어요!', `응원 선물로 ${gotCard ? '힌트 카드 1장과 ' : ''}구급상자 1개를 받았다!${gotCard ? `\n(힌트 카드 ${S.hints}장 / 최대 ${HINT_MAX}장)` : ''}`]);
   }
   if (r !== 'win') return;
-  if (n === 7) { S.flags.denTrial = 1; return sayAll(['관장 운수: …내가 졌어. 하지만 배지는 아직 못 줘!', '북쪽 확률의 굴에 계신 장로님의 시험을 통과하고 와.\n그게 이 마을의 전통이야!']); }
   await awardBadge(n);
 };
 async function awardBadge(n) {
