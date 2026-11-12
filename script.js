@@ -531,9 +531,10 @@ Object.assign(SP, {
   treeb: { name: '명제새싹', art: 'tree', v: 'cool', big: .8, type: '바위', hp: 48, atk: 42, def: 52, moves: ['들이받기', '참 거짓 펀치', '역 공격', '대우 프레스'], evo: [18, 'tree'], dex: ['흉내몬', 0.5, 15, '나무인 척하는 연습을 하는 중이다. 아직 잎이 어설프다.'] },
   pandab: { name: '꾸벅아기판다', art: 'panda', v: 'warm', big: .8, type: '노말', hp: 60, atk: 42, def: 44, moves: ['몸통박치기', '하품', '낮잠 굴리기', '영점 조절'], evo: [24, 'panda'], dex: ['졸음몬', 0.6, 105, '수업 시간에 하품을 하다가 그대로 잠든다.'] },
   turtleb: { name: '확률아기거북', art: 'turtle', v: 'warm', big: .8, type: ['물', '얼음'], hp: 56, atk: 42, def: 48, moves: ['몸통박치기', '반반 물방울', '여사건 냉기', '확률 물대포'], evo: [30, 'turtle'], dex: ['운반몬', 0.9, 40, '확률거북의 새끼. 등껍질 무늬가 동전처럼 앞뒤로 다르다.'] },
-  phi: { name: '황금비새', art: 'gen', gs: { body: 'bird', c1: '#e8b830', c2: '#fff4c0', glyph: 'φ' }, add: ['crest', 'wings'], big: 1.3, type: ['비행', '에스퍼'], hp: 90, atk: 92, def: 84, moves: ['에어로블래스트', '황금비 날개', '닮음 파동', '황금나선 폭풍'], dex: ['황금비몬', 2.1, 66, '전설의 사계몬. 날개의 가로와 세로가 언제나 황금비를 이룬다.'] },
-  euler: { name: '오일러룡', art: 'gen', gs: { body: 'serpent', c1: '#3aa0a0', c2: '#e0fff8', glyph: 'e' }, add: ['horns', 'wings'], big: 1.35, type: ['드래곤', '전기'], hp: 96, atk: 98, def: 82, moves: ['용의파동', '자연상수 번개', '무한급수 역린', '오일러 대폭발'], dex: ['상수몬', 5.4, 210, '전설의 사계몬. 2.71828…로 끝없이 이어지는 몸을 가졌다.'] },
-  zeroking: { name: '제로황제', art: 'gen', gs: { body: 'jelly', c1: '#2a2a4a', c2: '#c8c8f0', glyph: '0' }, add: ['crown', 'wings'], big: 1.3, type: ['고스트', '에스퍼'], hp: 100, atk: 96, def: 96, moves: ['섀도펀치', '영의 저주', '무(無)의 파동', '절대영점'], dex: ['영몬', 2.0, 0, '전설의 사계몬. 어떤 수와 곱해도 모든 것을 0으로 만든다고 전해진다.'] },
+  // 극한의 탑 전설 3마리 (미리보기 ㉓, 2026-11-12): 예전 전설의 모양은 그대로, 색과 타입을 사계절로. 히든 3마리와 합쳐 사계절 두 타입 조합 6가지
+  phi: { name: '황금비새', art: 'gen', gs: { body: 'bird', c1: '#f0a020', c2: '#e85a30', glyph: 'φ' }, add: ['crest', 'wings'], big: 1.3, type: ['여름', '가을'], hp: 90, atk: 92, def: 84, moves: ['몸통박치기', '황금비 활공', '한여름 햇살', '황금나선 단풍'], dex: ['황금비몬', 2.1, 66, '전설의 사계몬. 날개의 가로와 세로가 언제나 황금비를 이룬다. 한여름 햇살을 받아 가을 단풍빛으로 빛난다.'] },
+  euler: { name: '오일러룡', art: 'gen', gs: { body: 'serpent', c1: '#2a8ad0', c2: '#e8fbff', glyph: 'e' }, add: ['horns', 'wings'], big: 1.35, type: ['여름', '겨울'], hp: 96, atk: 98, def: 82, moves: ['몸통박치기', '자연상수 소나기', '끝없는 파랑', '무한급수 눈사태'], dex: ['상수몬', 5.4, 210, '전설의 사계몬. 2.71828…로 끝없이 이어지는 몸을 가졌다. 여름 소나기와 겨울 눈사태를 함께 부른다.'] },
+  zeroking: { name: '제로황제', art: 'gen', gs: { body: 'jelly', c1: '#d06a8a', c2: '#f4c860', glyph: '0' }, add: ['crown', 'wings'], big: 1.3, type: ['봄', '가을'], hp: 100, atk: 96, def: 96, moves: ['몸통박치기', '영점 꽃비', '새싹 영점', '절대영점 낙엽'], dex: ['영몬', 2.0, 0, '전설의 사계몬. 어떤 수와 곱해도 모든 것을 0으로 만든다고 전해진다. 봄에 피고 가을에 지는 꽃잎을 왕관처럼 두른다.'] },
 });
 SP.snake2.evo = [36, 'snake3']; SP.bat2.evo = [40, 'bat3']; SP.rock2.evo = [42, 'rock3']; SP.croc2.evo = [44, 'croc3']; SP.dino2.evo = [46, 'dino3']; SP.octo2.evo = [46, 'octo3']; SP.dice2.evo = [46, 'dice3'];
 SP.owl.evo = [34, 'owl2']; SP.top.evo = [34, 'top2'];
@@ -2660,13 +2661,30 @@ const ELITES = [
 { const a = room('champroom', 10, 10, { name: '챔피언의 방', floor: '#f6e6c8', unit: 0 }); a.set(1, 3, 'q').set(8, 3, 'q').set(1, 6, 'q').set(8, 6, 'q').rect(3, 4, 6, 8, 'r'); a.ent({ id: 'champ', kind: 'champ', x: 4, y: 2, dir: 'down', pal: 'champ' }); }
 // 첫 4인방 방의 나가는 문: 다온을 이긴 뒤에는 안내원이 막는다 (나가서 보건실 회복 못 하게. 지면 기록이 지워져 다시 열림)
 for (const [x, ox] of [[4, 2], [5, 7]]) gateGuard(API.league1, x, 8, ox, 8, () => !S.flags.elite0, '안내원: 졸업 전당은 한 번 들어오면 챔피언까지 쭉 가야 해!\n(지면 처음부터 다시 도전해요)', '안내원: 졸업 전당에 온 걸 환영해! 4인방을 이길 때마다 다음 방 문이 열려.\n한 번이라도 지면 처음부터 다시야. 회복은 가방 아이템으로!', 'guard', 'leagueGuard' + x);
+// 극한의 탑 안 (미리보기 ㉓, 2026-11-12): 챔피언 뒤 엔딩 후 콘텐츠. ① 탑 사범(층 도전) ② 기록 안내원 ③ 위쪽 받침대에 전설
+{
+  const a = room('tower', 12, 11, { name: '극한의 탑', floor: '#e6e0f2' });
+  a.set(1, 3, 'q').set(10, 3, 'q').set(1, 7, 'q').set(10, 7, 'q').rect(4, 5, 7, 9, 'r');
+  mat(a, 5, 'gradhill', 0, 0); a.m.units = ALL_UNITS; a.m.xpMul = 0.8;
+  a.ent({ id: 'towerM', kind: 'towerM', x: 5, y: 4, dir: 'down', pal: 'monk' });
+  a.ent({ id: 'towerDesk', kind: 'towerDesk', x: 2, y: 8, dir: 'right', pal: 't2' });
+  a.ent({ id: 'towerS', kind: 'towerS', x: 6, y: 2, dir: 'down', pal: 'senpai' });
+  a.ent({ id: 'phiT', kind: 'legend', sp: 'phi', lv: 57, x: 3, y: 2, dir: 'down', flag: 'phi', need: () => towerBest() >= 10 });
+  a.ent({ id: 'eulerT', kind: 'legend', sp: 'euler', lv: 64, x: 8, y: 2, dir: 'down', flag: 'euler', need: () => towerBest() >= 20 });
+  a.ent({ id: 'zeroT', kind: 'legend', sp: 'zeroking', lv: 71, x: 6, y: 2, dir: 'down', flag: 'zeroking', need: () => !!S.flags.senpai });
+}
 // 졸업 언덕 (미리보기 ㉑): 졸업 길 동쪽. 가운데 큰 건물 = 졸업 전당(4인방 첫 방)
 house('gradH', '졸업 언덕 쉼터', [{ id: 'gradh', kind: 'npc', x: 7, y: 4, dir: 'left', pal: 't2', lines: ['사계절을 모두 돌아 여기까지 왔구나!', '4인방은 봄, 여름, 가을, 겨울 순서래. 다음 상대의 계절을 미리 생각해 두렴.', '챔피언 만점은 중학교 수학 전 범위에서 문제를 낸대!'] }]);
 townGen('gradhill', { name: '졸업 언덕', theme: 'town', unit: 0, w: 24, h: 20, seed: 1601, exits: ['W'], blds: [
   { x: 8, y: 2, w: 8, roof: 'G', d: 4, to: 'league1', emblem: '★' }, { x: 2, y: 12, w: 4, roof: 'C', d: 2, to: 'center', ret: 1 },
-  { x: 18, y: 12, w: 4, roof: 'M', d: 2, to: 'mart', ret: 1, arrive: [4, 6] }, { x: 13, y: 12, w: 4, roof: 'H', d: 1, to: 'gradH' }] });
+  { x: 18, y: 12, w: 4, roof: 'M', d: 2, to: 'mart', ret: 1, arrive: [4, 6] }, { x: 13, y: 12, w: 4, roof: 'H', d: 1, to: 'gradH' },
+  { x: 18, y: 3, w: 5, roof: 'B', d: 2, to: 'tower', emblem: '∞' }] }); // 극한의 탑 (미리보기 ㉓)
 API.gradhill.m.units = ALL_UNITS; API.gradhill.m.xpMul = 0.8; blossom(API.gradhill.m, 5, .6);
 API.gradhill.sign(API.gradhill.cx - 2, 7, '졸업 언덕\n사계절 여행을 마친 트레이너만 오르는 언덕');
+{ // 극한의 탑 문 앞: 챔피언이 되기 전에는 탑 사범이 막는다
+  const { x: dx, y: dy } = Object.values(MAPS.tower.warps)[0]; // 탑에서 나왔을 때 서는 자리 = 문 바로 앞
+  gateGuard(API.gradhill, dx, dy, dx + 1, dy, () => S.champ > 0, '탑 사범: 여기는 극한의 탑. 챔피언만 도전할 수 있다.\n(졸업 전당에서 챔피언을 이기고 오자)', '탑 사범: 챔피언이군! 극한의 탑에 온 걸 환영하네.', 'monk', 'towerGate');
+}
 // 마지막 히든 맵 '벚꽃 비밀 정원' (미리보기 ㉒, 2026-11-10): 새봄마을 연못 위 오래된 벚나무 아래 길(배지 8개) → 정원. 비석 2연속 정답(전 범위) → 햇꽃사자 Lv 45
 routeGen('garden', { name: '벚꽃 비밀 정원', theme: 'town', unit: 0, w: 22, h: 18, cx: 1, pond: 1, wild: ['queenbung', 'wanggaegul', 'kkotsaem', 'wangmae', 'keunjip'], lv: [42, 45], ends: [['S', 11]], trainers: 0, items: [['fpotion', 2], ['ball', 3]], hidden: [['fpotion', 1]], flowers: 10, seed: 227 });
 {
@@ -2722,10 +2740,7 @@ const QUESTS = {
   3: { need: () => Object.keys(S.caught).length >= 30, ask: ['도감 연구가: 서로 다른 사계몬 30종! 그걸 모으면 정말 대단한 거야.', '해내면 마스터매스볼 같은 귀한 걸 줄지도?'], done: '30종이라니! 이걸 받으렴. 하이퍼매스볼 10개와 공부사탕 2개!', reward: [['hball', 10], ['candy', 2]], after: '도감을 완성하는 그날까지! 응원할게.' },
 };
 
-// 엔딩 후 전설 3마리
-API.mt3.ent({ id: 'phiL', kind: 'legend', sp: 'phi', lv: 50, x: 6, y: 6, dir: 'down', flag: 'phi', need: () => S.champ > 0 });
-API.den.ent({ id: 'eulerL', kind: 'legend', sp: 'euler', lv: 52, x: 11, y: 3, dir: 'down', flag: 'euler', need: () => S.champ > 0 && S.badges[7] });
-API.summit.ent({ id: 'zeroL', kind: 'legend', sp: 'zeroking', lv: 60, x: 8, y: 5, dir: 'down', flag: 'zeroking', need: () => S.flags.master });
+// 엔딩 후 전설 3마리: 예전에는 명상의 탑·확률의 굴·은빛산(지금은 갈 수 없는 지도)에 있었음 → 극한의 탑 안쪽 받침대로 옮김 (미리보기 ㉓, 2026-11-12)
 
 // ================== 수학몬스터 골드 엔진 ==================
 const $ = s => document.querySelector(s);
@@ -3089,6 +3104,7 @@ let lastQ = null;
 // 복습 (기획서 Q1-1): 지금 영역보다 앞서 지나온 영역의 문제를 25% 섞는다. 체육관을 하나 만들 때마다 한 줄씩 더한다
 const REVIEW_DOMAINS = [[11, 1, 13], [21, '2a', 23], [31, '2b', 33], [41, 3, 43], [51, 52, 53], [4, '5a', '5b'], [71, 72, 73], [81, 6, 83]];
 function pickUnit() {
+  if (B && B.o.pickU) return B.o.pickU(); // 극한의 탑: 약점 단원 70% + 전 범위 30%
   if (B && B.o.units) return pick(B.o.units);
   if (CUR && CUR.units && !(B && B.o.unit !== undefined)) return pick(CUR.units); // 지도 전체가 복습 범위인 곳 (무지개섬)
   const u = B && B.o.unit !== undefined ? B.o.unit : CUR.unit;
@@ -3250,6 +3266,7 @@ function entVisible(e) {
     case 'radmin': case 'boss': return !!S.flags.takeover && !S.flags.radioClear;
     case 'rgrunt': return !!S.flags.takeover && !S.flags.radioClear;
     case 'beasts': return !S.flags.beasts;
+    case 'towerS': return !!S.tower && S.tower.cur === 30 && !S.flags.senpai; // 극한의 탑 30층: 전설의 선배
     case 'sick': return !S.flags.cured;
     case 'npc6': return !S.flags.cured; // 약을 먹인 뒤 관장은 체육관으로 돌아간다
   }
@@ -3273,6 +3290,7 @@ async function warpTo(id, x, y, dir) {
 }
 function loadMap(id, x, y, dir) {
   const prev = CUR;
+  if (prev && prev.id === 'tower' && id !== 'tower' && S.tower) S.tower.cur = towerCk(S.tower.cur); // 극한의 탑 밖으로 나가면 체크 층부터 다시
   CUR = MAPS[id]; P.x = x; P.y = y; P.moving = false; P.slide = false; P.jump = false; if (dir) P.dir = dir;
   if (SOLID.has(tileAt(x, y)) && !/\d/.test(tileAt(x, y))) { // 지도가 바뀐 옛 저장: 가장 가까운 빈 땅으로
     const q = [[x, y]], seen = new Set([x + ',' + y]); while (q.length) { const [cx, cy] = q.shift(); const t = tileAt(cx, cy); if (t !== undefined && !SOLID.has(t) && t !== '~' && !/\d/.test(t)) { P.x = cx; P.y = cy; break; } for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) { const k = (cx + dx) + ',' + (cy + dy); if (!seen.has(k) && cx + dx >= 0 && cy + dy >= 0 && cx + dx < CUR.w && cy + dy < CUR.h) { seen.add(k); q.push([cx + dx, cy + dy]); } } } }
@@ -3515,7 +3533,8 @@ H.prof = async () => {
     S.flags.profTalked = 1; return;
   }
   // (예전 바탕 파일: 배지 8개면 '무조건 잡히는 볼'을 줬음 → 히든 몬스터 잡기가 너무 쉬워져 2026-11-11 지움)
-  if (S.champ && !S.keys.sfeather) { await sayAll(['정박사: 챔피언이 되었다고? 이건 은빛 깃털이란다.', '바닷길 한가운데 동굴 깊은 곳에서 무언가가 기다린다는 전설이 있지.']); return giveKey('sfeather'); }
+  // (예전: 챔피언에게 은빛 깃털 → 지금은 갈 수 없는 바다 동굴 안내라 2026-11-12 지움. 대신 극한의 탑 안내)
+  if (S.champ && !S.flags.towerTip) { S.flags.towerTip = 1; return sayAll(['정박사: 챔피언이 되었다고? 정말 대단하구나!', '졸업 언덕에 극한의 탑이 열렸단다. 끝없이 올라가는 탑이지.\n층마다 네가 약한 단원 문제가 많이 나온다더구나.', '꼭대기 가까이에는 전설의 사계몬과 전설의 선배가 기다린다는 소문이 있어!']); }
   const n = Object.keys(S.caught).length;
   return sayAll([`정박사: 도감에 ${n}종이 등록됐구나!`, n < 20 ? '여러 지역의 풀숲과 물가를 돌아다니며 다양한 사계몬을 만나 보렴.' : '훌륭해! 도감 연구가들이 너를 보면 기뻐할 거야.']);
 };
@@ -3844,6 +3863,60 @@ H.master = async () => {
   const team = [['zero2', 56], ['dice2', 57], ['fish2', 57], ['wonju3', 60], ['root3', 60], ['inf3', 60]].map(([sp, lv]) => mkMon(sp, lv, false, 1.8));
   const r = await battle({ kind: 'champ', team, trainer: { title: '전설의 선배', name: '…', pal: 'senpai', lose: '……!' }, money: 20000, unit: 0 });
   if (r === 'win') { S.flags.master = (S.flags.master || 0) + 1; await sayAll(['……', '(선배가 조용히 고개를 끄덕였다. 진정한 사계몬 마스터로 인정받았다!)']); }
+};
+// ---------- 극한의 탑 (미리보기 ㉓, 2026-11-12 선생님 승인) ----------
+// 층마다 3마리. 레벨 = 46 + 층 × 0.7. 5층 묶음을 다 깨야 회복. 지거나 탑 밖으로 나가면 체크 층(1·6·11…)부터.
+// 문제: 약점 단원(3문제 이상 푼 단원 중 정답률 낮은 3개) 70% + 전 범위 30%. 10층 황금비새 · 20층 오일러룡 · 30층 전설의 선배 → 제로황제
+const TOWER_POOL = ['root3', 'haerong3', 'danpung3', 'nunmung3', 'queenbung', 'wangmae', 'bam2', 'seal', 'nunkkot', 'napul', 'wanggaegul', 'kkotsaem', 'subak', 'mallang', 'sonak', 'wangppul', 'jam', 'song', 'dongbaek', 'seolyeo', 'nungurum', 'godeum'];
+const towerLv = f => Math.min(100, Math.round(46 + f * 0.7));
+const towerCk = f => Math.floor((f - 1) / 5) * 5 + 1;
+const towerBest = () => (S.tower && S.tower.best) || 0;
+const towerWeak = () => ALL_UNITS.filter(u => S.stats[u] && S.stats[u][0] >= 3).sort((a, b) => S.stats[a][1] / S.stats[a][0] - S.stats[b][1] / S.stats[b][0]).slice(0, 3);
+const towerPick = () => { const w = (S.tower && S.tower.weak) || []; return w.length && Math.random() < .7 ? pick(w) : pick(ALL_UNITS); };
+const shortUnit = u => String(SUBLABEL[u] || u).replace(/^(.+?) · (중\d)(?: \((.+)\))?$/, (m, a, g, b) => `${b || a}(${g})`);
+async function towerAsk(T) {
+  await say(`탑 사범: ${T.cur}층에 도전하겠나?\n(상대 Lv ${towerLv(T.cur)} · 최고 기록 ${T.best}층)`, { wait: false });
+  return yesno();
+}
+H.towerM = H.towerS = async () => {
+  const T = S.tower || (S.tower = { cur: 1, best: 0 });
+  if (!T.base) { T.base = {}; for (const u of towerWeak()) T.base[u] = S.stats[u].slice(); } // 첫 도전 때 약점 단원 정답률 기록 (성적표에 '처음 → 지금')
+  if (!T.seen) { T.seen = 1; await sayAll(['탑 사범: 극한의 탑에 온 걸 환영하네. 층마다 사범 3마리와 겨루게.', '문제는 자네가 약한 단원에서 많이 나온다네.\n5층을 모두 깨야 회복되고, 지면 체크 층(1·6·11…층)부터 다시일세.', '탑 문 밖으로 나가도 체크 층부터 다시 시작하니 조심하게.']); }
+  if (!await towerAsk(T)) return say('탑 사범: 준비가 되면 다시 오게.');
+  while (true) {
+    const f = T.cur; T.weak = towerWeak();
+    let r;
+    if (f === 30 && !S.flags.senpai) {
+      S.party.forEach(fullHeal); SFX.heal();
+      await sayAll(['……', '(전설의 선배가 말없이 앞으로 나섰다.)', '(사계몬들의 체력과 기술이 모두 회복되었다!)']);
+      const fin = s => { while (SP[s].evo) s = SP[s].evo[1]; return s; };
+      const team = [[fin(STARTERS[0]), 68], [fin(STARTERS[1]), 68], [fin(STARTERS[2]), 69], [fin(STARTERS[3]), 69], ['rainbow', 70], ['sunlion', 70]].map(([sp, lv]) => mkMon(sp, lv, false, HPMUL.champ));
+      r = await battle({ kind: 'champ', team, trainer: { title: '전설의 선배', name: '…', pal: 'senpai', lose: '……!' }, money: 20000, pickU: towerPick, noBlackout: true });
+      if (r === 'win') { S.flags.senpai = 1; await sayAll(['……', '(선배가 조용히 고개를 끄덕이고 사라졌다.)', '(탑 안쪽 받침대에 제로황제가 나타났다!)']); }
+    } else {
+      const lv = towerLv(f), team = [0, 1, 2].map(() => mkMon(pick(TOWER_POOL), lv, false, HPMUL.trainer));
+      r = await battle({ kind: 'trainer', team, trainer: { title: '극한의 탑', name: `${f}층 사범`, pal: 'monk', lose: '훌륭하다! 다음 층으로 가게.' }, money: 500 + f * 20, pickU: towerPick, noBlackout: true });
+    }
+    if (r !== 'win') {
+      T.cur = towerCk(f); S.party.forEach(fullHeal); SFX.heal(); save();
+      return sayAll([`${S.name}의 사계몬들이 모두 쓰러졌다…`, `탑 사범: 괜찮네. ${T.cur}층부터 다시 올라오게.\n(사계몬들을 회복시켜 주었다)`]);
+    }
+    const first = f > T.best; T.cur = f + 1; if (first) T.best = f;
+    if (f % 5 === 0) {
+      S.party.forEach(fullHeal); SFX.heal(); await say(`${f}층 돌파!\n사계몬들의 체력과 기술이 모두 회복되었다!`);
+      if (f > (T.candy || 0)) { T.candy = f; await giveItem('candy', 1); } // 5층마다 공부사탕 (처음 깰 때만)
+    } else await say(`${f}층 돌파!`);
+    if (first && f === 10) await say('(탑 안쪽 받침대에 황금비새가 나타났다!)');
+    if (first && f === 20) await say('(탑 안쪽 받침대에 오일러룡이 나타났다!)');
+    save();
+    if (!await towerAsk(T)) return say('탑 사범: 잠시 쉬어도 좋네. 탑 안에 있으면 층은 그대로일세.');
+  }
+};
+H.towerDesk = async () => {
+  const T = S.tower, w = towerWeak().map(shortUnit).join(', ');
+  await sayAll(['기록 안내원: 극한의 탑은 층마다 3마리와 싸워요.\n5층을 모두 깨야 회복! 지면 체크 층(1·6·11…층)부터 다시예요.', '탑 문 밖으로 나가도 체크 층부터 다시 시작해요.\n10층·20층·30층에는 전설이 기다리고 있대요!',
+    T ? `최고 기록 ${T.best}층 · 다음 도전 ${T.cur}층` : '아직 도전 기록이 없어요. 탑 사범에게 말을 걸어 보세요!',
+    w ? `지금 약점 단원: ${w}\n이 단원 문제가 많이 나와요. 힘내요!` : '아직 약점 단원을 정할 만큼 문제를 풀지 않았어요.']);
 };
 
 // ---------- 그리기: 필드 ----------
@@ -4351,7 +4424,7 @@ async function battle(o) {
   fx = { kind: 'black', k: 0 }; await tween(300, k => fx.k = k);
   scene = 'world'; held.length = 0;
   await tween(250, k => fx.k = 1 - k); fx = null;
-  if (result === 'lose') await blackout();
+  if (result === 'lose') { if (!o.noBlackout) await blackout(); } // 극한의 탑은 지면 탑 안에서 회복 (보건실로 안 감)
   else await checkEvolve();
   B = null; save();
   return result;
@@ -4675,7 +4748,21 @@ const DEX_ORDER = (() => {
   for (const sp of Object.keys(SP)) { if (targets.has(sp) || LEGENDS.includes(sp) || out.includes(sp)) continue; let s2 = sp, g = 0; while (s2 && g++ < 4) { if (!out.includes(s2)) out.push(s2); s2 = SP[s2].evo && SP[s2].evo[1]; } }
   return out.concat(LEGENDS);
 })();
-const dexNo = sp => String(DEX_ORDER.indexOf(sp) + 1).padStart(3, '0');
+// 도감에는 지금 게임에서 만날 수 있는 사계몬만 센다 (2026-11-12: 예전 버전 지도에만 있던 몬스터 때문에 '/ 257'이 되던 것 고침)
+// 새봄마을에서 갈 수 있는 지도의 풀숲·물가·비석·전설·첫 몬스터 + 그 진화형. 예전 저장에서 이미 잡은 몬스터는 그대로 보인다
+const DEX_OK = (() => {
+  const seen = new Set(['town']), q = ['town'], sp = new Set(STARTERS);
+  while (q.length) {
+    const m = MAPS[q.shift()];
+    for (const k of ['wild', 'water']) if (m[k] && m[k].list) m[k].list.forEach(s => sp.add(Array.isArray(s) ? s[0] : s));
+    for (const e of m.ents || []) { if (e.sp) sp.add(e.sp); if (e.cfg && e.cfg.sp) sp.add(e.cfg.sp); if (e.kind === 'stele' && !e.cfg) sp.add('rainbow'); /* 무지개섬 비석(기본 설정) */ if (e.to && MAPS[e.to] && !seen.has(e.to)) { seen.add(e.to); q.push(e.to); } }
+    for (const w of Object.values(m.warps || {})) if (w.to && MAPS[w.to] && !seen.has(w.to)) { seen.add(w.to); q.push(w.to); }
+  }
+  for (const s of [...sp]) { let x = s, g = 0; while (SP[x] && SP[x].evo && g++ < 4) { x = SP[x].evo[1]; sp.add(x); } }
+  return sp;
+})();
+const dexList = () => DEX_ORDER.filter(sp => DEX_OK.has(sp) || S.caught[sp]);
+const dexNo = sp => String(dexList().indexOf(sp) + 1).padStart(3, '0');
 function overlay(html, cls, acts) { // acts: 닫지 않고 실행할 단추 { 키 동작: 함수 } (성적표 '이미지로 저장')
   return new Promise(res => {
     const el = document.createElement('div'); el.className = cls; el.innerHTML = html; ui.appendChild(el);
@@ -4897,10 +4984,11 @@ async function shop(kind = 'basic') {
 async function dexMenu() {
   let i = 0;
   while (true) {
-    i = await chooseList({ title: '사계몬 도감', sub: `만남 ${Object.keys(S.seen).length} / ${DEX_ORDER.length} · 잡음 ${Object.keys(S.caught).length}`, start: i, foot: '만난 사계몬은 모두 도감에 올라가요 · ● 잡은 사계몬 · A: 자세히 보기',
-      rows: DEX_ORDER.map(sp => (S.seen[sp] || S.caught[sp]) ? `<img src="${icon(sp)}" alt=""><span class="grow">No.${dexNo(sp)} ${SP[sp].name} ${S.caught[sp] ? '<span style="color:#d79a18">●</span>' : ''}<br><span class="sm">${(SP[sp].dex || [])[0] || ''}</span></span>${typeTags(sp)}` : `<span class="grow sm">No.${dexNo(sp)} ? ? ?</span>`) });
+    const DL = dexList();
+    i = await chooseList({ title: '사계몬 도감', sub: `만남 ${DL.filter(sp => S.seen[sp] || S.caught[sp]).length} / ${DL.length} · 잡음 ${Object.keys(S.caught).length}`, start: i, foot: '만난 사계몬은 모두 도감에 올라가요 · ● 잡은 사계몬 · A: 자세히 보기',
+      rows: DL.map(sp => (S.seen[sp] || S.caught[sp]) ? `<img src="${icon(sp)}" alt=""><span class="grow">No.${dexNo(sp)} ${SP[sp].name} ${S.caught[sp] ? '<span style="color:#d79a18">●</span>' : ''}<br><span class="sm">${(SP[sp].dex || [])[0] || ''}</span></span>${typeTags(sp)}` : `<span class="grow sm">No.${dexNo(sp)} ? ? ?</span>`) });
     if (i < 0) return;
-    const sp = DEX_ORDER[i];
+    const sp = DL[i];
     if (S.seen[sp] || S.caught[sp]) await dexCard(sp); else toast('아직 만나지 못했어요');
   }
 }
@@ -4944,7 +5032,11 @@ function reportData() {
     : ['', `더 연습할 곳: ${REPORT_ROWS[wk[0]]} · 중${wk[1]} (${wp}%) → 보건실에서 '오답노트 다시 풀기'로 복습해요!`];
   const tot = Object.values(S.stats).reduce((a, [n, ok]) => [a[0] + n, a[1] + ok], [0, 0]);
   const d = new Date(), pad = v => String(v).padStart(2, '0');
-  return { cell, pct, weakTxt, tot, acc: tot[0] ? Math.round(tot[1] / tot[0] * 100) : 0, d, pad,
+  // 극한의 탑 (미리보기 ㉓): 최고 층 + 첫 도전 때 약점 단원의 정답률 → 지금
+  const T = S.tower, towerTop = T && T.best ? `극한의 탑 최고 ${T.best}층` : '';
+  const towerSub = towerTop && T.base && Object.keys(T.base).length ? '약점 단원 (첫 도전 → 지금): ' + Object.entries(T.base).map(([u, b]) => `${shortUnit(u)} ${pct(b)}% → ${pct(S.stats[u] || b)}%`).join(' · ') : '';
+  const towerTxt = towerTop + (towerSub ? ' · ' + towerSub : '');
+  return { cell, pct, weakTxt, towerTop, towerSub, towerTxt, tot, acc: tot[0] ? Math.round(tot[1] / tot[0] * 100) : 0, d, pad,
     date: `${d.getFullYear()}. ${pad(d.getMonth() + 1)}. ${pad(d.getDate())}.(${'일월화수목금토'[d.getDay()]}) ${pad(d.getHours())}:${pad(d.getMinutes())}` };
 }
 async function reportMenu() {
@@ -4957,12 +5049,12 @@ async function reportMenu() {
     <div class="rp-id"><span class="who"><em>${S.sid}</em>${S.name}</span><span class="rp-badges">배지 ${S.badges.filter(Boolean).length}/8 ${badges}</span></div>
     <div class="rp-sum">푼 문제 ${tot[0]}개 · 정답률 ${R.acc}% · 잡은 사계몬 ${Object.keys(S.caught).length}종 · 플레이 ${Math.floor((S.playMs || 0) / 60000)}분 · 오답노트 ${S.notes.length}문제 남음 (정복 ${S.solved || 0})</div>
     <table><tr><th>영역</th><th>중1</th><th>중2</th><th>중3</th></tr>${REPORT_ROWS.map((n, r) => `<tr><td>${n}</td>${td(r, 1)}${td(r, 2)}${td(r, 3)}</tr>`).join('')}</table>
-    ${weakHtml}
-    <div class="rp-f"><span>이 화면을 캡처하거나 이미지로 저장해서 제출하세요</span><span><button class="rp-save" data-act="c">📷 이미지로 저장 (C)</button> A: 닫기</span></div>`, 'report', { c: saveReportPNG });
+    ${weakHtml}${R.towerTop ? `<div class="rp-tower">${R.towerTop}${R.towerSub ? `<br>${R.towerSub}` : ''}</div>` : ''}
+    <div class="rp-f"><span>이 화면을 캡처하거나 이미지로 저장해서 제출하세요</span><span><button class="rp-save" data-act="c">📷 이미지로 저장 (C)</button> A: 닫기</span></div>`, R.towerTop ? 'report tw' : 'report', { c: saveReportPNG });
 }
 // ---------- 성적표 '이미지로 저장' (미리보기 ⑱, 2026-11-09): 게임이 직접 그려 PNG로 내려받는다. 인터넷·서버 없이 됨 ----------
 function reportCanvas() {
-  const R = reportData(), W = 1280, H = 800, cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+  const R = reportData(), W = 1280, H = R.towerTop ? 900 : 800, cv = document.createElement('canvas'); cv.width = W; cv.height = H;
   const g = cv.getContext('2d'), UI = '"Nanum Gothic Coding","Malgun Gothic","Apple SD Gothic Neo",sans-serif', TT = '"Black Han Sans","Malgun Gothic",sans-serif';
   const rr = (x, y, w, h, r, fill) => { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); g.fillStyle = fill; g.fill(); };
   const txt = (s, x, y, font, col, align = 'left') => { g.font = font; g.fillStyle = col; g.textAlign = align; g.textBaseline = 'middle'; g.fillText(s, x, y); };
@@ -5000,8 +5092,12 @@ function reportCanvas() {
   });
   // 더 연습할 곳 · 바닥
   rr(56, 650, W - 112, 58, 12, R.weakTxt[0] ? '#dff5e3' : '#fbe0de'); txt(R.weakTxt[1], 76, 679, `700 26px ${UI}`, '#26263a');
-  txt('사계몬스터 · 중학교 수학 · 사계절 졸업 여행', 56, 748, `700 22px ${UI}`, '#7a1d3e');
-  txt('이 그림은 게임의 「이미지로 저장」으로 만들었어요', W - 56, 748, `700 22px ${UI}`, '#7a1d3e', 'right');
+  if (R.towerTop) { // 극한의 탑 (미리보기 ㉓): 첫 줄 최고 층, 둘째 줄 약점 단원 (길면 글자를 조금 줄임)
+    rr(56, 720, W - 112, R.towerSub ? 90 : 58, 12, '#e6eefc'); txt(R.towerTop, 76, 749, `700 28px ${UI}`, '#2a3a8a');
+    if (R.towerSub) { let fs = 24; g.font = `700 ${fs}px ${UI}`; while (fs > 16 && g.measureText(R.towerSub).width > W - 152) g.font = `700 ${--fs}px ${UI}`; txt(R.towerSub, 76, 786, `700 ${fs}px ${UI}`, '#26263a'); }
+  }
+  txt('사계몬스터 · 중학교 수학 · 사계절 졸업 여행', 56, H - 52, `700 22px ${UI}`, '#7a1d3e');
+  txt('이 그림은 게임의 「이미지로 저장」으로 만들었어요', W - 56, H - 52, `700 22px ${UI}`, '#7a1d3e', 'right');
   return cv;
 }
 function saveReportPNG() {
