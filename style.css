@@ -195,6 +195,16 @@ button:focus-visible{outline:3px solid #6ab0ff;outline-offset:2px}
 .tc-b.no .face{filter:grayscale(1);opacity:.4}
 .tc-b .n{color:#26263a}.tc-b.no .n{color:#a8a49a}
 .tc-b .no1{position:absolute;right:.6cqw;top:0;background:#d89a6a;color:#fff;border-radius:.6cqw;padding:0 .7cqw;font-size:2.1cqw}
+/* 선생님용 플레이 기록 (미리보기 ㉕): 트레이너 카드에서 Ctrl + Alt + L */
+.tc-log{background:#fbfaf4;border-radius:1.2cqw;padding:1.4cqw 2.4cqw;flex:1;display:flex;flex-direction:column;min-height:0;gap:.8cqw}
+.tc-log h4{margin:0;font-size:3.4cqw;color:#2a2a8a;border-bottom:.5cqw solid #26263a;padding-bottom:.5cqw;display:flex;justify-content:space-between;align-items:baseline}
+.tc-log h4 small{font-size:2.3cqw;color:#7a7a8a}
+.lg-rows{flex:1;overflow:auto;display:flex;flex-direction:column;gap:.7cqw;font-size:2.7cqw;font-variant-numeric:tabular-nums}
+.lg-rows p{margin:0;color:#7a7a8a}
+.lg-d{display:grid;grid-template-columns:15cqw 1fr auto;column-gap:2cqw;row-gap:0;align-items:baseline;border-bottom:.25cqw dashed #d8d4c8;padding-bottom:.5cqw}
+.lg-d b{grid-row:span 99;color:#26263a}.lg-d .t{color:#3a3a50}.lg-d .m{color:#7a7a8a;text-align:right}
+.lg-d .sum{grid-column:2/4;color:#c0306a;font-size:2.3cqw}
+.lg-note{margin:0;font-size:2.1cqw;color:#8a8a98;line-height:1.35}
 .badgepop{position:absolute;left:50%;top:13%;transform:translateX(-50%);z-index:8;background:#fbfaf4;border:.6cqw solid #d79a18;border-radius:2cqw;padding:2cqw 3cqw;text-align:center;font-weight:700;font-size:3cqw;color:#26263a;animation:pop .25s}
 .badgepop img{width:20cqw;display:block;margin:0 auto 1cqw;image-rendering:auto;animation:spinin .6s ease-out}
 @keyframes spinin{from{transform:scale(.2) rotate(-200deg)}to{transform:none}}

@@ -3194,7 +3194,7 @@ let lastBody = '';
 function save(silent = true) {
   if (!S || !CUR) return; S.map = CUR.id; S.x = P.x; S.y = P.y; S.dir = P.dir;
   // 바뀐 게 없으면(플레이 시간 제외) 자동 저장은 건너뛴다 → 휴대폰에서 끊김 줄이기
-  const sv = S.savedAt, pm = S.playMs; delete S.savedAt; delete S.playMs; const body = JSON.stringify(S); S.savedAt = sv; S.playMs = pm;
+  const sv = S.savedAt, pm = S.playMs, pl = S.plog; delete S.savedAt; delete S.playMs; delete S.plog; const body = JSON.stringify(S); S.savedAt = sv; S.playMs = pm; if (pl) S.plog = pl; // 플레이 기록(plog)도 비교에서 뺌
   if (silent && body === lastBody) return; lastBody = body;
   S.savedAt = Date.now();
   try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); localOK = localStorage.getItem(SAVE_KEY) !== null; } catch (e) { localOK = false; }
@@ -5026,7 +5026,11 @@ function trainerCard() {
     const has = !!S.badges[i];
     return `<div class="tc-b ${has ? '' : 'no'}"><span class="no1">${i + 1}</span><img class="face" src="${faceIcon('L' + i)}" alt="">${has ? `<img class="bd" src="${badgeIcon(i, 72)}" alt="">` : '<i class="slot"></i>'}<span class="n">${has ? G.badge : G.name}</span></div>`;
   }).join('');
-  return overlay(`<div class="tc-top"><div class="tc-info"><span class="nm">이름 / ${S.name}</span><span>ID No.</span><span class="v">${id}</span><span>소지금</span><span class="v">${S.money.toLocaleString()}원</span><span>도감</span><span class="v">만남 ${seen} · 잡음 ${caught}</span><span>모험 시간</span><span class="v">${Math.floor(mins / 60)}시간 ${mins % 60}분</span></div><img class="tc-hero" src="${personCanvas('hero').toDataURL()}" alt=""></div><div class="tc-bt"><h4>체육관 배지 ${S.badges.filter(Boolean).length} / 8</h4><div class="tc-badges">${cells}</div></div>`, 'tcard');
+  const p = overlay(`<div class="tc-top"><div class="tc-info"><span class="nm">이름 / ${S.name}</span><span>ID No.</span><span class="v">${id}</span><span>소지금</span><span class="v">${S.money.toLocaleString()}원</span><span>도감</span><span class="v">만남 ${seen} · 잡음 ${caught}</span><span>모험 시간</span><span class="v">${Math.floor(mins / 60)}시간 ${mins % 60}분</span></div><img class="tc-hero" src="${personCanvas('hero').toDataURL()}" alt=""></div><div class="tc-bt"><h4>체육관 배지 ${S.badges.filter(Boolean).length} / 8</h4><div class="tc-badges">${cells}</div></div>`, 'tcard');
+  const card = ui.lastElementChild; // 선생님용: 카드가 열린 동안 Ctrl + Alt + L → 플레이 기록 (미리보기 ㉕)
+  const onKey = ev => { if (ev.ctrlKey && ev.altKey && ev.code === 'KeyL') { ev.preventDefault(); if (card.isConnected) card.innerHTML = playLogHtml(); } };
+  document.addEventListener('keydown', onKey, true);
+  return p.finally(() => document.removeEventListener('keydown', onKey, true));
 }
 // ---------- 성적표 (기획서 8장, 미리보기 ⑤): 학생이 캡처해서 제출한다 ----------
 const REPORT_ROWS = ['수와 연산', '문자와 식', '함수', '기하', '확률과 통계'];
@@ -5305,12 +5309,31 @@ async function ending(first) {
   hideTb(); await reportMenu();
   scene = 'world';
 }
+// ---------- 선생님용 플레이 기록 (미리보기 ㉕, 2026-11-13): 트레이너 카드에서 Ctrl + Alt + L ----------
+// S.plog = [[시작 시각, 끝 시각, 화면이 켜져 있던 ms], …]. 5분 넘게 끊기면 새 줄, 최근 14일만
+let plogT = 0, plogMs = 0;
+function logPlay(dt) {
+  plogMs += dt; const now = Date.now(); if (now - plogT < 10000) return; plogT = now;
+  const L = S.plog || (S.plog = []), last = L[L.length - 1];
+  if (last && now >= last[1] && now - last[1] < 5 * 60000) { last[1] = now; last[2] = (last[2] || 0) + plogMs; } else L.push([now, now, 0]);
+  plogMs = 0;
+  const cut = now - 14 * 864e5; while (L.length && L[0][1] < cut) L.shift();
+}
+function playLogHtml() {
+  const p2 = n => String(n).padStart(2, '0'), hm = t => { const d = new Date(t); return `${p2(d.getHours())}:${p2(d.getMinutes())}`; };
+  const day = t => { const d = new Date(t); return `${d.getMonth() + 1}/${d.getDate()}(${'일월화수목금토'[d.getDay()]})`; };
+  const mn = ms => ms < 60000 ? '1분 미만' : ms >= 3600000 ? `${Math.floor(ms / 3600000)}시간 ${Math.round(ms % 3600000 / 60000)}분` : `${Math.round(ms / 60000)}분`;
+  const L = S.plog || [], days = [];
+  for (const s of L) { const k = day(s[0]); let g = days.find(x => x.k === k); if (!g) days.push(g = { k, s: [] }); g.s.push(s); }
+  const rows = days.reverse().map(g => `<div class="lg-d"><b>${g.k}</b>${g.s.map(s => `<span class="t">${hm(s[0])} ~ ${hm(s[1])}</span><span class="m">${mn(s[2] || 0)}</span>`).join('')}<span class="sum">이날 합계 ${mn(g.s.reduce((a, s) => a + (s[2] || 0), 0))}</span></div>`).join('');
+  return `<div class="tc-log"><h4>플레이 기록 · ${S.name} <small>선생님 확인용 · 최근 14일</small></h4><div class="lg-rows">${rows || '<p>아직 기록이 없어요.</p>'}</div><p class="lg-note">기록 시작 ${L.length ? day(L[0][0]) : '-'} · 5분 넘게 쉬면 새 줄 · 화면이 꺼져 있던 시간은 빼고 셈<br>컴퓨터 시계를 바꾸거나 다른 기기·브라우저에서 한 것은 여기 안 나와요 · 아무 곳이나 누르면 닫힘</p></div>`;
+}
 // ---------- 메인 루프 ----------
 let lastT = performance.now();
 function loop(now) {
   const dt = Math.min(50, now - lastT); lastT = now;
   try {
-    if (S && scene !== 'title') S.playMs = (S.playMs || 0) + dt;
+    if (S && scene !== 'title') { S.playMs = (S.playMs || 0) + dt; logPlay(dt); }
     if (scene === 'world' && CUR) { updateWorld(dt); drawWorld(now); }
     else if (scene === 'battle' && B) drawBattle(now);
     else if (scene === 'title') drawTitle(now);
