@@ -2647,10 +2647,10 @@ routeGen('highland', { name: '하늘 오솔길', theme: 'tower', unit: 0, w: 34,
 // 졸업 4인방 & 챔피언 (미리보기 ㉑, 2026-11-10): 사계절 4인방, 2마리씩, 관장 수준(HPMUL·EDMG elite = leader). 지면 처음부터
 const ALL_UNITS = [11, 1, 13, 21, '2a', 23, 31, '2b', 33, 41, 3, 43, 51, 52, 53, 4, '5a', '5b', 71, 72, 73, 81, 6, 83]; // 중학교 수학 전 범위
 const ELITES = [
-  { name: '다온', title: '봄의 4인방', units: [11, 1, 13, 21, '2a', 23], team: [['kkotsaem', 44], ['wanggaegul', 45]], floor: '#fbe6ee', pal: 'E0', line: ['졸업 전당에 온 걸 환영해. 나는 봄의 4인방 다온.', '봄은 모든 것의 시작. 수와 식, 기초부터 단단한지 볼까?'], lose: '기초가 탄탄하구나. 다음 방으로 가렴.' },
-  { name: '시원', title: '여름의 4인방', units: [31, '2b', 33, 41, 3, 43], team: [['wangmae', 44], ['wangppul', 45]], floor: '#e2f2dc', pal: 'E1', line: ['여름의 4인방 시원이다.', '한여름 햇볕처럼 뜨겁게! x가 정해지면 답도 정해진다!'], lose: '소나기처럼 시원한 승부였어.' },
-  { name: '가람', title: '가을의 4인방', units: [51, 52, 53, 4, '5a', '5b'], team: [['song', 44], ['bam2', 45]], floor: '#f6e4cc', pal: 'E2', line: ['가을의 4인방 가람.', '단풍잎 모양도 결국 도형이야. 증명해 봐!'], lose: '증명 끝. 너의 승리야.' },
-  { name: '은설', title: '겨울의 4인방', units: [71, 72, 73, 81, 6, 83], team: [['seal', 44], ['nunkkot', 45]], floor: '#e4eef8', pal: 'E3', line: ['마지막 4인방, 겨울의 은설.', '눈송이 하나도 확률로 떨어진다. 너의 승률을 계산해 볼까?'], lose: '계산 결과… 너의 승률은 1이었어. 챔피언이 기다린다.' },
+  { name: '다온', title: '봄의 4인방', units: [11, 1, 13, 21, '2a', 23], team: [['kkotsaem', 46], ['wanggaegul', 47]], floor: '#fbe6ee', pal: 'E0', line: ['졸업 전당에 온 걸 환영해. 나는 봄의 4인방 다온.', '봄은 모든 것의 시작. 수와 식, 기초부터 단단한지 볼까?'], lose: '기초가 탄탄하구나. 다음 방으로 가렴.' },
+  { name: '시원', title: '여름의 4인방', units: [31, '2b', 33, 41, 3, 43], team: [['wangmae', 47], ['wangppul', 48]], floor: '#e2f2dc', pal: 'E1', line: ['여름의 4인방 시원이다.', '한여름 햇볕처럼 뜨겁게! x가 정해지면 답도 정해진다!'], lose: '소나기처럼 시원한 승부였어.' },
+  { name: '가람', title: '가을의 4인방', units: [51, 52, 53, 4, '5a', '5b'], team: [['song', 48], ['bam2', 49]], floor: '#f6e4cc', pal: 'E2', line: ['가을의 4인방 가람.', '단풍잎 모양도 결국 도형이야. 증명해 봐!'], lose: '증명 끝. 너의 승리야.' },
+  { name: '은설', title: '겨울의 4인방', units: [71, 72, 73, 81, 6, 83], team: [['seal', 49], ['nunkkot', 50]], floor: '#e4eef8', pal: 'E3', line: ['마지막 4인방, 겨울의 은설.', '눈송이 하나도 확률로 떨어진다. 너의 승률을 계산해 볼까?'], lose: '계산 결과… 너의 승률은 1이었어. 챔피언이 기다린다.' },
 ];ELITES.forEach((E, i) => {
   const a = room('league' + (i + 1), 10, 10, { name: `4인방의 방 ${i + 1}`, floor: E.floor, unit: E.units[0], units: E.units });
   a.set(1, 3, 'q').set(8, 3, 'q').set(1, 6, 'q').set(8, 6, 'q');
@@ -2665,13 +2665,15 @@ for (const [x, ox] of [[4, 2], [5, 7]]) gateGuard(API.league1, x, 8, ox, 8, () =
 {
   const a = room('tower', 12, 11, { name: '극한의 탑', floor: '#e6e0f2' });
   a.set(1, 3, 'q').set(10, 3, 'q').set(1, 7, 'q').set(10, 7, 'q').rect(4, 5, 7, 9, 'r');
-  mat(a, 5, 'gradhill', 0, 0); a.m.units = ALL_UNITS; a.m.xpMul = 0.8;
+  mat(a, 5, 'gradhill', 0, 0); a.m.units = ALL_UNITS; a.m.xpMul = 0.5; // 경험치 0.5배 (미리보기 ㉔, 2026-11-13: 30층까지 약 20번 도전)
+  a.set(5, 10, 'f').set(6, 10, 'f'); // 출구 매트 없앰 → 탑 문지기에게 말을 걸어야 나감 (warps는 졸업 언덕 문 위치 계산용으로 남김)
+  a.ent({ id: 'towerExit', kind: 'towerExit', x: 5, y: 10, dir: 'up', pal: 'guard' });
   a.ent({ id: 'towerM', kind: 'towerM', x: 5, y: 4, dir: 'down', pal: 'monk' });
   a.ent({ id: 'towerDesk', kind: 'towerDesk', x: 2, y: 8, dir: 'right', pal: 't2' });
   a.ent({ id: 'towerS', kind: 'towerS', x: 6, y: 2, dir: 'down', pal: 'senpai' });
-  a.ent({ id: 'phiT', kind: 'legend', sp: 'phi', lv: 57, x: 3, y: 2, dir: 'down', flag: 'phi', need: () => towerBest() >= 10 });
-  a.ent({ id: 'eulerT', kind: 'legend', sp: 'euler', lv: 64, x: 8, y: 2, dir: 'down', flag: 'euler', need: () => towerBest() >= 20 });
-  a.ent({ id: 'zeroT', kind: 'legend', sp: 'zeroking', lv: 71, x: 6, y: 2, dir: 'down', flag: 'zeroking', need: () => !!S.flags.senpai });
+  a.ent({ id: 'phiT', kind: 'legend', sp: 'phi', lv: 63, x: 3, y: 2, dir: 'down', flag: 'phi', need: () => !!S.tower && S.tower.cur >= 11 }); // 지금 도전 층이 11층 이상일 때만 (미리보기 ㉔)
+  a.ent({ id: 'eulerT', kind: 'legend', sp: 'euler', lv: 72, x: 8, y: 2, dir: 'down', flag: 'euler', need: () => !!S.tower && S.tower.cur >= 21 });
+  a.ent({ id: 'zeroT', kind: 'legend', sp: 'zeroking', lv: 81, x: 6, y: 2, dir: 'down', flag: 'zeroking', need: () => !!S.flags.senpai });
 }
 // 졸업 언덕 (미리보기 ㉑): 졸업 길 동쪽. 가운데 큰 건물 = 졸업 전당(4인방 첫 방)
 house('gradH', '졸업 언덕 쉼터', [{ id: 'gradh', kind: 'npc', x: 7, y: 4, dir: 'left', pal: 't2', lines: ['사계절을 모두 돌아 여기까지 왔구나!', '4인방은 봄, 여름, 가을, 겨울 순서래. 다음 상대의 계절을 미리 생각해 두렴.', '챔피언 만점은 중학교 수학 전 범위에서 문제를 낸대!'] }]);
@@ -3290,7 +3292,7 @@ async function warpTo(id, x, y, dir) {
 }
 function loadMap(id, x, y, dir) {
   const prev = CUR;
-  if (prev && prev.id === 'tower' && id !== 'tower' && S.tower) S.tower.cur = towerCk(S.tower.cur); // 극한의 탑 밖으로 나가면 체크 층부터 다시
+  if (prev && prev.id === 'tower' && id !== 'tower' && S.tower) S.tower.cur = towerCk(S.tower.cur); // 극한의 탑 밖으로 나가면 15층까지는 1층, 16층부터는 16층부터 (미리보기 ㉔)
   CUR = MAPS[id]; P.x = x; P.y = y; P.moving = false; P.slide = false; P.jump = false; if (dir) P.dir = dir;
   if (SOLID.has(tileAt(x, y)) && !/\d/.test(tileAt(x, y))) { // 지도가 바뀐 옛 저장: 가장 가까운 빈 땅으로
     const q = [[x, y]], seen = new Set([x + ',' + y]); while (q.length) { const [cx, cy] = q.shift(); const t = tileAt(cx, cy); if (t !== undefined && !SOLID.has(t) && t !== '~' && !/\d/.test(t)) { P.x = cx; P.y = cy; break; } for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) { const k = (cx + dx) + ',' + (cy + dy); if (!seen.has(k) && cx + dx >= 0 && cy + dy >= 0 && cx + dx < CUR.w && cy + dy < CUR.h) { seen.add(k); q.push([cx + dx, cy + dy]); } } } }
@@ -3820,7 +3822,10 @@ H.hole = async e => {
 };
 H.legend = async e => {
   await sayAll(['…공기가 떨린다.', `${SP[e.sp].name}의 눈이 이쪽을 바라본다!`]);
-  const r = await battle({ kind: 'legend', team: [mkMon(e.sp, e.lv, false, HPMUL.legend)], unit: 0 });
+  const inTower = CUR.id === 'tower' && S.tower; // 탑 안 전설: 지면 탑 층에서 진 것과 똑같이 (미리보기 ㉔)
+  if (inTower) { S.tower.fight = 1; save(); }
+  const r = await battle({ kind: 'legend', team: [mkMon(e.sp, e.lv, false, HPMUL.legend)], unit: 0, noBlackout: !!inTower });
+  if (inTower) { delete S.tower.fight; if (r === 'lose') return towerLose(); save(); }
   if (r === 'caught') S.flags[e.flag] = 1;
   else if (r === 'win') await say(`${SP[e.sp].name}의 기운이 잠시 흩어졌다…\n(다시 찾아오면 또 만날 수 있다. 체력을 조금씩 깎아 잡아 보자!)`);
 };
@@ -3850,7 +3855,7 @@ H.champ = async () => {
   await sayAll([S.champ ? '챔피언 만점: 다시 왔구나! 실력이 녹슬지 않았는지 볼까?' : '챔피언 만점: 사계절을 모두 돌아 4인방까지 넘다니… 기다리고 있었다.', '나는 졸업 챔피언 만점. 이번 승부에서는\n중학교 수학 전 범위의 문제가 나온다. 마지막 문제다!']);
   const third = STARTERS.find(s => s !== S.starter && s !== rivalSp(1));
   // 미리보기 ㉑: 사계절 4마리, 마지막은 나도 라이벌도 고르지 않은 첫 몬스터의 최종 진화형. 챔피언은 어렵게(HPMUL·EDMG champ)
-  const team = [['queenbung', 45], ['keunjip', 46], ['jam', 46], [SP[SP[third].evo[1]].evo[1], 47]].map(([sp, lv]) => mkMon(sp, lv, false, HPMUL.champ));
+  const team = [['queenbung', 50], ['keunjip', 51], ['jam', 51], [SP[SP[third].evo[1]].evo[1], 52]].map(([sp, lv]) => mkMon(sp, lv, false, HPMUL.champ));
   const r = await battle({ kind: 'champ', team, trainer: { title: '챔피언', name: '만점', pal: 'champ', lose: '…훌륭하다. 네가 바로 새로운 졸업 챔피언이야!' }, money: 10000, units: ALL_UNITS });
   if (r !== 'win') { for (let i = 0; i < 4; i++) delete S.flags['elite' + i]; return; } // 지면 처음부터
   const first = !S.champ; S.champ = (S.champ || 0) + 1;
@@ -3865,57 +3870,70 @@ H.master = async () => {
   if (r === 'win') { S.flags.master = (S.flags.master || 0) + 1; await sayAll(['……', '(선배가 조용히 고개를 끄덕였다. 진정한 사계몬 마스터로 인정받았다!)']); }
 };
 // ---------- 극한의 탑 (미리보기 ㉓, 2026-11-12 선생님 승인) ----------
-// 층마다 3마리. 레벨 = 46 + 층 × 0.7. 5층 묶음을 다 깨야 회복. 지거나 탑 밖으로 나가면 체크 층(1·6·11…)부터.
+// 층마다 3마리. 레벨 = 50 + 층 × 0.9 (2026-11-13 상향, 전: 46 + 층 × 0.7). 5층 묶음을 다 깨야 회복. 지면 보건실에서 부활·1층부터(돈 그대로),
+// 탑 밖으로 나가거나 창을 닫으면 15층까지 1층·16층부터 16층, 배틀 도중 창을 닫으면 진 것 (미리보기 ㉔, 2026-11-13). 경험치 0.5배.
 // 문제: 약점 단원(3문제 이상 푼 단원 중 정답률 낮은 3개) 70% + 전 범위 30%. 10층 황금비새 · 20층 오일러룡 · 30층 전설의 선배 → 제로황제
 const TOWER_POOL = ['root3', 'haerong3', 'danpung3', 'nunmung3', 'queenbung', 'wangmae', 'bam2', 'seal', 'nunkkot', 'napul', 'wanggaegul', 'kkotsaem', 'subak', 'mallang', 'sonak', 'wangppul', 'jam', 'song', 'dongbaek', 'seolyeo', 'nungurum', 'godeum'];
-const towerLv = f => Math.min(100, Math.round(46 + f * 0.7));
-const towerCk = f => Math.floor((f - 1) / 5) * 5 + 1;
+const towerLv = f => Math.min(100, Math.round(50 + f * 0.9));
+const towerCk = f => f >= 16 ? 16 : 1; // 나갈 때 체크 층 (미리보기 ㉔: 15층까지 1층, 16층부터 16층. 지면 언제나 1층)
 const towerBest = () => (S.tower && S.tower.best) || 0;
 const towerWeak = () => ALL_UNITS.filter(u => S.stats[u] && S.stats[u][0] >= 3).sort((a, b) => S.stats[a][1] / S.stats[a][0] - S.stats[b][1] / S.stats[b][0]).slice(0, 3);
 const towerPick = () => { const w = (S.tower && S.tower.weak) || []; return w.length && Math.random() < .7 ? pick(w) : pick(ALL_UNITS); };
 const shortUnit = u => String(SUBLABEL[u] || u).replace(/^(.+?) · (중\d)(?: \((.+)\))?$/, (m, a, g, b) => `${b || a}(${g})`);
 async function towerAsk(T) {
-  await say(`탑 사범: ${T.cur}층에 도전하겠나?\n(상대 Lv ${towerLv(T.cur)} · 최고 기록 ${T.best}층)`, { wait: false });
+  await say(`탑 사범: ${T.cur}층에 도전하겠나?\n(상대 Lv ${T.cur === 30 && !S.flags.senpai ? '83~85' : towerLv(T.cur)} · 최고 기록 ${T.best}층)`, { wait: false });
   return yesno();
 }
 H.towerM = H.towerS = async () => {
   const T = S.tower || (S.tower = { cur: 1, best: 0 });
   if (!T.base) { T.base = {}; for (const u of towerWeak()) T.base[u] = S.stats[u].slice(); } // 첫 도전 때 약점 단원 정답률 기록 (성적표에 '처음 → 지금')
-  if (!T.seen) { T.seen = 1; await sayAll(['탑 사범: 극한의 탑에 온 걸 환영하네. 층마다 사범 3마리와 겨루게.', '문제는 자네가 약한 단원에서 많이 나온다네.\n5층을 모두 깨야 회복되고, 지면 체크 층(1·6·11…층)부터 다시일세.', '탑 문 밖으로 나가도 체크 층부터 다시 시작하니 조심하게.']); }
+  if ((T.seen || 0) < 2) { T.seen = 2; await sayAll(['탑 사범: 극한의 탑에 온 걸 환영하네.\n층마다 사범 3마리와 겨루게.', '문제는 자네가 약한 단원에서 많이 나온다네.\n5층을 모두 깨야 회복되고,\n한 번이라도 지면 1층부터 다시일세.', '탑 밖으로 나가거나 도중에 창을 닫아도\n1층부터 다시일세. 단, 16층까지 올라오면\n그다음부턴 16층부터 다시 할 수 있지.', '배틀 도중에 창을 닫으면 진 것으로 친다네.\n나가려면 아래쪽 문지기에게 말을 걸게.', '11층에 오르면 황금비새가,\n21층에 오르면 오일러룡이 받침대에 나타난다네.\n그리고 30층에는… 전설의 졸업생이 기다리고 있지.', '전설의 사계몬은 저마다 단 한 마리뿐.\n한 번 잡으면 다시는 나타나지 않는다네.', '최고 기록은 성적표에 남는다네.\n한 층이라도 더 높이! 자네의 한계를 넘어 보게!']); } // 미리보기 ㉔: 예전 안내를 들은 학생도 한 번 더
   if (!await towerAsk(T)) return say('탑 사범: 준비가 되면 다시 오게.');
   while (true) {
     const f = T.cur; T.weak = towerWeak();
     let r;
-    if (f === 30 && !S.flags.senpai) {
-      S.party.forEach(fullHeal); SFX.heal();
-      await sayAll(['……', '(전설의 선배가 말없이 앞으로 나섰다.)', '(사계몬들의 체력과 기술이 모두 회복되었다!)']);
+    T.fight = 1; save(); // 배틀 도중 창을 닫으면 진 것으로 (다시 열 때 startWorld에서 처리)
+    if (f === 30 && !S.flags.senpai) { // 미리보기 ㉔: 선배 직전 회복 없음, Lv 83~85
+      await sayAll(['……', '(전설의 졸업생, 선배가 말없이 앞으로 나섰다.)']);
       const fin = s => { while (SP[s].evo) s = SP[s].evo[1]; return s; };
-      const team = [[fin(STARTERS[0]), 68], [fin(STARTERS[1]), 68], [fin(STARTERS[2]), 69], [fin(STARTERS[3]), 69], ['rainbow', 70], ['sunlion', 70]].map(([sp, lv]) => mkMon(sp, lv, false, HPMUL.champ));
+      const team = [[fin(STARTERS[0]), 83], [fin(STARTERS[1]), 83], [fin(STARTERS[2]), 84], [fin(STARTERS[3]), 84], ['rainbow', 85], ['sunlion', 85]].map(([sp, lv]) => mkMon(sp, lv, false, HPMUL.champ));
       r = await battle({ kind: 'champ', team, trainer: { title: '전설의 선배', name: '…', pal: 'senpai', lose: '……!' }, money: 20000, pickU: towerPick, noBlackout: true });
       if (r === 'win') { S.flags.senpai = 1; await sayAll(['……', '(선배가 조용히 고개를 끄덕이고 사라졌다.)', '(탑 안쪽 받침대에 제로황제가 나타났다!)']); }
     } else {
       const lv = towerLv(f), team = [0, 1, 2].map(() => mkMon(pick(TOWER_POOL), lv, false, HPMUL.trainer));
       r = await battle({ kind: 'trainer', team, trainer: { title: '극한의 탑', name: `${f}층 사범`, pal: 'monk', lose: '훌륭하다! 다음 층으로 가게.' }, money: 500 + f * 20, pickU: towerPick, noBlackout: true });
     }
-    if (r !== 'win') {
-      T.cur = towerCk(f); S.party.forEach(fullHeal); SFX.heal(); save();
-      return sayAll([`${S.name}의 사계몬들이 모두 쓰러졌다…`, `탑 사범: 괜찮네. ${T.cur}층부터 다시 올라오게.\n(사계몬들을 회복시켜 주었다)`]);
-    }
+    if (r !== 'win') return towerLose();
     const first = f > T.best; T.cur = f + 1; if (first) T.best = f;
+    delete T.fight; save(); // 이긴 결과를 바로 저장 (이 뒤에 창을 닫아도 진 것으로 안 침)
+    const rec = first ? ' 최고 기록 갱신!' : '';
     if (f % 5 === 0) {
-      S.party.forEach(fullHeal); SFX.heal(); await say(`${f}층 돌파!\n사계몬들의 체력과 기술이 모두 회복되었다!`);
+      S.party.forEach(fullHeal); SFX.heal(); await say(`${f}층 돌파!${rec}\n사계몬들의 체력과 기술이 모두 회복되었다!`);
       if (f > (T.candy || 0)) { T.candy = f; await giveItem('candy', 1); } // 5층마다 공부사탕 (처음 깰 때만)
-    } else await say(`${f}층 돌파!`);
-    if (first && f === 10) await say('(탑 안쪽 받침대에 황금비새가 나타났다!)');
-    if (first && f === 20) await say('(탑 안쪽 받침대에 오일러룡이 나타났다!)');
+    } else await say(`${f}층 돌파!${rec}`);
+    if (f === 10 && !S.flags.phi) await say('(탑 안쪽 받침대에 황금비새가 나타났다!)');
+    if (f === 20 && !S.flags.euler) await say('(탑 안쪽 받침대에 오일러룡이 나타났다!)');
     save();
-    if (!await towerAsk(T)) return say('탑 사범: 잠시 쉬어도 좋네. 탑 안에 있으면 층은 그대로일세.');
+    if (!await towerAsk(T)) return say('탑 사범: 잠시 쉬어도 좋네.\n탑 안에 있으면 층은 그대로일세.');
   }
+};
+// 탑에서 짐 (층 사범·선배·탑 안 전설): 마지막으로 들른 보건실에서 부활, 돈은 그대로, 1층부터 (미리보기 ㉔)
+async function towerLose() {
+  const T = S.tower; T.cur = 1; delete T.fight;
+  await sayAll([`${S.name}의 사계몬들이 모두 쓰러졌다…`, `탑 사범: 괜찮네. 최고 기록 ${T.best}층은 그대로 남는다네.\n1층부터 다시, 이번엔 더 높이 올라가 보게!`]);
+  await blackout(true); save();
+}
+H.towerExit = async () => {
+  const T = S.tower || { cur: 1 }, back = towerCk(T.cur);
+  if (T.cur <= 1) await say('탑 문지기: 밖으로 나가겠나? 언제든 다시 도전하러 오게.', { wait: false });
+  else { await say(`탑 문지기: 잠깐! 지금 ${T.cur}층까지 올라왔군.\n탑 밖으로 나가면 다음엔 ${back}층부터 다시 올라와야 하네.`); await say('(최고 기록은 그대로 남아요)\n그래도 나가겠나?', { wait: false }); }
+  if (!await yesno()) return say('탑 문지기: 좋아! 끝까지 올라가 보게. 응원하네!');
+  const w = Object.values(MAPS.tower.warps)[0]; loadMap(w.to, w.x, w.y, 'down'); save();
 };
 H.towerDesk = async () => {
   const T = S.tower, w = towerWeak().map(shortUnit).join(', ');
-  await sayAll(['기록 안내원: 극한의 탑은 층마다 3마리와 싸워요.\n5층을 모두 깨야 회복! 지면 체크 층(1·6·11…층)부터 다시예요.', '탑 문 밖으로 나가도 체크 층부터 다시 시작해요.\n10층·20층·30층에는 전설이 기다리고 있대요!',
-    T ? `최고 기록 ${T.best}층 · 다음 도전 ${T.cur}층` : '아직 도전 기록이 없어요. 탑 사범에게 말을 걸어 보세요!',
+  await sayAll(['기록 안내원: 극한의 탑은 층마다 3마리와 싸워요.\n5층을 모두 깨야 회복! 한 번이라도 지면 1층부터 다시예요.', '탑 밖으로 나가거나 창을 닫으면 1층부터 다시예요.\n(16층부터는 16층부터!)\n배틀 도중에 창을 닫으면 진 것으로 쳐요.', '11층에 오르면 황금비새,\n21층에 오르면 오일러룡이 나타나고,\n30층엔 전설의 졸업생이 있대요!',
+    T ? `최고 기록 ${T.best}층 · 다음 도전 ${T.cur}층\n최고 기록을 꼭 넘어 봐요! 응원할게요!` : '아직 도전 기록이 없어요. 탑 사범에게 말을 걸어 보세요!',
     w ? `지금 약점 단원: ${w}\n이 단원 문제가 많이 나와요. 힘내요!` : '아직 약점 단원을 정할 만큼 문제를 풀지 않았어요.']);
 };
 
@@ -4698,9 +4716,9 @@ async function throwBall(ok, it, id) {
   else { fullHeal(m); S.box.push(m); await say(`동료가 이미 6마리라서 ${jo(monName(m), '은는')}\n사계몬 보관소로 보내졌다! (보관소 ${S.box.length}마리)`); await say('(보건실의 보관소 컴퓨터에서 데려갈 수 있어요.)'); }
   return 'caught';
 }
-async function blackout() {
+async function blackout(keepMoney) { // keepMoney: 극한의 탑 패배는 돈을 안 줄임 (미리보기 ㉔)
   await say(`${jo(S.name, '은는')} 눈앞이 캄캄해졌다…`);
-  S.money = Math.floor(S.money / 2);
+  if (!keepMoney) S.money = Math.floor(S.money / 2);
   S.party.forEach(fullHeal);
   if (S.heal.ret) S.ret = { ...S.heal.ret };
   for (let i = 0; i < 4; i++) delete S.flags['elite' + i];
@@ -5260,8 +5278,22 @@ function worldMap() {
 function startWorld() {
   if (!S.keys.map && (S.flags.rival1 || S.badges.some(Boolean))) S.keys.map = 1; // 예전 저장: 지도 지급
   normalizeBag(S); // 예전 저장: 없어진 아이템·장착 아이템·상태이상 정리
+  let towerMsg = null; // 극한의 탑 도중에 창을 닫음 (미리보기 ㉔)
+  if (S.tower && (S.tower.fight || S.map === 'tower')) {
+    const T = S.tower, best = `(최고 기록 ${T.best}층은 그대로 남아 있어요!)`;
+    if (T.fight) { // 배틀 도중 → 진 것: 마지막으로 들른 보건실에서 회복, 1층부터 (돈은 그대로)
+      delete T.fight; T.cur = 1; S.party.forEach(fullHeal); if (S.heal.ret) S.ret = { ...S.heal.ret };
+      S.map = S.heal.map; S.x = S.heal.x; S.y = S.heal.y; S.dir = 'up';
+      towerMsg = ['(탑 배틀 도중에 게임을 떠나서\n진 것으로 처리되었어요. 다음 도전은 1층부터예요.)', best];
+    } else { // 배틀 밖 → 탑 문 앞, 15층까지 1층 · 16층부터 16층
+      T.cur = towerCk(T.cur); const w = Object.values(MAPS.tower.warps)[0];
+      S.map = w.to; S.x = w.x; S.y = w.y; S.dir = 'down';
+      towerMsg = [`(탑 도전 중에 게임을 떠나서\n극한의 탑 앞에서 다시 시작해요.\n다음 도전은 ${T.cur}층부터예요.)`, best];
+    }
+  }
   CUR = null; loadMap(S.map || 'home', S.x, S.y, S.dir || 'down');
   hideTb(); scene = 'world';
+  if (towerMsg) { save(); setTimeout(() => run(() => sayAll(towerMsg)), 600); }
 }
 async function ending(first) {
   scene = 'evo'; EVO = { intro: true, t0: performance.now(), done: true }; // 첫 몬스터 4마리
