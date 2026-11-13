@@ -2665,14 +2665,14 @@ for (const [x, ox] of [[4, 2], [5, 7]]) gateGuard(API.league1, x, 8, ox, 8, () =
 {
   const a = room('tower', 12, 11, { name: '극한의 탑', floor: '#e6e0f2' });
   a.set(1, 3, 'q').set(10, 3, 'q').set(1, 7, 'q').set(10, 7, 'q').rect(4, 5, 7, 9, 'r');
-  mat(a, 5, 'gradhill', 0, 0); a.m.units = ALL_UNITS; a.m.xpMul = 0.5; // 경험치 0.5배 (미리보기 ㉔, 2026-11-13: 30층까지 약 20번 도전)
+  mat(a, 5, 'gradhill', 0, 0); a.m.units = ALL_UNITS; a.m.xpMul = 0.15; // 경험치 0.15배 (2026-11-13 선생님 시험 플레이 Lv 66으로 1번에 깸 → C안: 교체·아이템 포함 시뮬레이션 선생님급 약 10번·잘하는 학생 약 14번)
   a.set(5, 10, 'f').set(6, 10, 'f'); // 출구 매트 없앰 → 탑 문지기에게 말을 걸어야 나감 (warps는 졸업 언덕 문 위치 계산용으로 남김)
   a.ent({ id: 'towerExit', kind: 'towerExit', x: 5, y: 10, dir: 'up', pal: 'guard' });
   a.ent({ id: 'towerM', kind: 'towerM', x: 5, y: 4, dir: 'down', pal: 'monk' });
   a.ent({ id: 'towerDesk', kind: 'towerDesk', x: 2, y: 8, dir: 'right', pal: 't2' });
   a.ent({ id: 'towerS', kind: 'towerS', x: 6, y: 2, dir: 'down', pal: 'senpai' });
-  a.ent({ id: 'phiT', kind: 'legend', sp: 'phi', lv: 63, x: 3, y: 2, dir: 'down', flag: 'phi', need: () => !!S.tower && S.tower.cur >= 11 }); // 지금 도전 층이 11층 이상일 때만 (미리보기 ㉔)
-  a.ent({ id: 'eulerT', kind: 'legend', sp: 'euler', lv: 72, x: 8, y: 2, dir: 'down', flag: 'euler', need: () => !!S.tower && S.tower.cur >= 21 });
+  a.ent({ id: 'phiT', kind: 'legend', sp: 'phi', lv: 67, x: 3, y: 2, dir: 'down', flag: 'phi', need: () => !!S.tower && S.tower.cur >= 11 }); // 지금 도전 층이 11층 이상일 때만 (미리보기 ㉔)
+  a.ent({ id: 'eulerT', kind: 'legend', sp: 'euler', lv: 77, x: 8, y: 2, dir: 'down', flag: 'euler', need: () => !!S.tower && S.tower.cur >= 21 });
   a.ent({ id: 'zeroT', kind: 'legend', sp: 'zeroking', lv: 81, x: 6, y: 2, dir: 'down', flag: 'zeroking', need: () => !!S.flags.senpai });
 }
 // 졸업 언덕 (미리보기 ㉑): 졸업 길 동쪽. 가운데 큰 건물 = 졸업 전당(4인방 첫 방)
@@ -2701,6 +2701,8 @@ routeGen('garden', { name: '벚꽃 비밀 정원', theme: 'town', unit: 0, w: 22
   g.ent({ id: 'holeG', kind: 'hole', x: bx, y: gay, dir: 'down', to: 'town', tx: 14, ty: 10, tdir: 'down', ask: '새봄마을로 돌아가는 벚나무 길이다. 돌아갈까?' });
 }
 link('town', 'E', 'gradroad', 'W'); link('gradroad', 'E', 'gradhill', 'W'); // 새봄마을 동쪽 → 졸업 길 → 졸업 언덕 (2026-11-10 선생님 요청: 다시 봄으로. 얼음호수시티에서는 좌표 종이비행기로)
+// 배지 8개 뒤 지도: 상대 기술 데미지 1.15배 (2026-11-13 선생님 요청: 졸업 길 야생부터 4인방·챔피언·극한의 탑·비밀 정원까지)
+['gradroad', 'gradhill', 'garden', 'league1', 'league2', 'league3', 'league4', 'champroom', 'tower'].forEach(id => { MAPS[id].edMul = 1.15; });
 // 체육관 문 연결: townGen 에서 gym 방 출구를 설정
 // ================= 연결 =================
 link('town', 'N', 'route1', 'S'); link('route1', 'N', 'bunsu', 'S'); link('bunsu', 'N', 'route2', 'S'); link('route2', 'N', 'cycle', 'S');
@@ -3870,18 +3872,18 @@ H.master = async () => {
   if (r === 'win') { S.flags.master = (S.flags.master || 0) + 1; await sayAll(['……', '(선배가 조용히 고개를 끄덕였다. 진정한 사계몬 마스터로 인정받았다!)']); }
 };
 // ---------- 극한의 탑 (미리보기 ㉓, 2026-11-12 선생님 승인) ----------
-// 층마다 3마리. 레벨 = 50 + 층 × 0.9 (2026-11-13 상향, 전: 46 + 층 × 0.7). 5층 묶음을 다 깨야 회복. 지면 보건실에서 부활·1층부터(돈 그대로),
-// 탑 밖으로 나가거나 창을 닫으면 15층까지 1층·16층부터 16층, 배틀 도중 창을 닫으면 진 것 (미리보기 ㉔, 2026-11-13). 경험치 0.5배.
+// 층마다 3마리. 레벨 = 53 + 층 × 1.0 (2026-11-13 두 번 상향, 처음: 46 + 층 × 0.7). 상대 데미지 1.15배(배지 8개 뒤 지도 edMul). 5층 묶음을 다 깨야 회복. 지면 보건실에서 부활·1층부터(돈 그대로),
+// 탑 밖으로 나가거나 창을 닫으면 15층까지 1층·16층부터 16층, 배틀 도중 창을 닫으면 진 것 (미리보기 ㉔, 2026-11-13). 경험치 0.15배, 선배 Lv 90~92 (C안).
 // 문제: 약점 단원(3문제 이상 푼 단원 중 정답률 낮은 3개) 70% + 전 범위 30%. 10층 황금비새 · 20층 오일러룡 · 30층 전설의 선배 → 제로황제
 const TOWER_POOL = ['root3', 'haerong3', 'danpung3', 'nunmung3', 'queenbung', 'wangmae', 'bam2', 'seal', 'nunkkot', 'napul', 'wanggaegul', 'kkotsaem', 'subak', 'mallang', 'sonak', 'wangppul', 'jam', 'song', 'dongbaek', 'seolyeo', 'nungurum', 'godeum'];
-const towerLv = f => Math.min(100, Math.round(50 + f * 0.9));
+const towerLv = f => Math.min(100, Math.round(53 + f * 1.0)); // 2026-11-13 보통 상향 (전: 50 + 층 × 0.9)
 const towerCk = f => f >= 16 ? 16 : 1; // 나갈 때 체크 층 (미리보기 ㉔: 15층까지 1층, 16층부터 16층. 지면 언제나 1층)
 const towerBest = () => (S.tower && S.tower.best) || 0;
 const towerWeak = () => ALL_UNITS.filter(u => S.stats[u] && S.stats[u][0] >= 3).sort((a, b) => S.stats[a][1] / S.stats[a][0] - S.stats[b][1] / S.stats[b][0]).slice(0, 3);
 const towerPick = () => { const w = (S.tower && S.tower.weak) || []; return w.length && Math.random() < .7 ? pick(w) : pick(ALL_UNITS); };
 const shortUnit = u => String(SUBLABEL[u] || u).replace(/^(.+?) · (중\d)(?: \((.+)\))?$/, (m, a, g, b) => `${b || a}(${g})`);
 async function towerAsk(T) {
-  await say(`탑 사범: ${T.cur}층에 도전하겠나?\n(상대 Lv ${T.cur === 30 && !S.flags.senpai ? '83~85' : towerLv(T.cur)} · 최고 기록 ${T.best}층)`, { wait: false });
+  await say(`탑 사범: ${T.cur}층에 도전하겠나?\n(상대 Lv ${T.cur === 30 && !S.flags.senpai ? '90~92' : towerLv(T.cur)} · 최고 기록 ${T.best}층)`, { wait: false });
   return yesno();
 }
 H.towerM = H.towerS = async () => {
@@ -3893,10 +3895,10 @@ H.towerM = H.towerS = async () => {
     const f = T.cur; T.weak = towerWeak();
     let r;
     T.fight = 1; save(); // 배틀 도중 창을 닫으면 진 것으로 (다시 열 때 startWorld에서 처리)
-    if (f === 30 && !S.flags.senpai) { // 미리보기 ㉔: 선배 직전 회복 없음, Lv 83~85
+    if (f === 30 && !S.flags.senpai) { // 미리보기 ㉔: 선배 직전 회복 없음. Lv 90~92 (2026-11-13 C안, 전: 83~85)
       await sayAll(['……', '(전설의 졸업생, 선배가 말없이 앞으로 나섰다.)']);
       const fin = s => { while (SP[s].evo) s = SP[s].evo[1]; return s; };
-      const team = [[fin(STARTERS[0]), 83], [fin(STARTERS[1]), 83], [fin(STARTERS[2]), 84], [fin(STARTERS[3]), 84], ['rainbow', 85], ['sunlion', 85]].map(([sp, lv]) => mkMon(sp, lv, false, HPMUL.champ));
+      const team = [[fin(STARTERS[0]), 90], [fin(STARTERS[1]), 90], [fin(STARTERS[2]), 91], [fin(STARTERS[3]), 91], ['rainbow', 92], ['sunlion', 92]].map(([sp, lv]) => mkMon(sp, lv, false, HPMUL.champ));
       r = await battle({ kind: 'champ', team, trainer: { title: '전설의 선배', name: '…', pal: 'senpai', lose: '……!' }, money: 20000, pickU: towerPick, noBlackout: true });
       if (r === 'win') { S.flags.senpai = 1; await sayAll(['……', '(선배가 조용히 고개를 끄덕이고 사라졌다.)', '(탑 안쪽 받침대에 제로황제가 나타났다!)']); }
     } else {
@@ -4516,7 +4518,7 @@ async function doMove(user, target, mv, side, { fast }) {
   if (fast) { SFX.crit(); await tween(220, k => B.a.flash = .9 * (1 - k)); } else SFX.hit();
   if (tside === 'e') { B.a.eBlink = true; await tween(380, k => B.a.eX = Math.sin(k * Math.PI * 4) * 4); B.a.eBlink = false; B.a.eX = 0; }
   else { B.a.pBlink = true; await tween(380, k => B.a.pX = Math.sin(k * Math.PI * 4) * 4); B.a.pBlink = false; B.a.pX = 0; }
-  const mult = (side === 'p' ? PDMG : (EDMG[B.o.kind] || 1)) * eff * stab(user.sp, mv.type) * (fast ? 1.5 : 1);
+  const mult = (side === 'p' ? PDMG : (EDMG[B.o.kind] || 1) * ((CUR && CUR.edMul) || 1)) * eff * stab(user.sp, mv.type) * (fast ? 1.5 : 1);
   const dmg = dmgCalc(user, target, mv.power, mult);
   await setHP(target, target.hp - dmg);
   if (fast) await say('급소에 맞았다!');
