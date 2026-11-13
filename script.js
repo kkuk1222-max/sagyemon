@@ -2369,6 +2369,10 @@ townGen('bunsu', { name: '벚꽃마을', theme: 'town', unit: 11, w: 22, h: 18, 
 blossom(API.bunsu.m, 3, .8);
 API.bunsu.sign(12, 10, '벚꽃마을\n꽃잎이 흩날리는 마을');
 API.bunsu.ev(API.bunsu.cx, 12, 'rival1', () => rivalBattle(1)); // 마을에 들어와 큰길을 오르다 라이벌을 만난다
+{ // 큰길 칸을 돌아서 피한 학생도 체육관 문 바로 앞(꼭 밟는 칸)에서 만난다 (2026-11-13 선생님 요청: 오답이를 피해 갈 수 없게)
+  const M = MAPS.bunsu, d = Object.keys(M.warps).find(k => M.warps[k].to === 'gym0');
+  for (let y = 0; y < M.h; y++) for (let x = 0; x < M.w; x++) if (M.g[y][x] === d) API.bunsu.ev(x, y + 1, 'rival1', () => rivalBattle(1));
+}
 // 북쪽 2번 도로(꽃샘시티 방향)는 벚꽃 배지를 따면 열린다
 gateGuard(API.bunsu, API.bunsu.cx, 1, API.bunsu.cx + 1, 1, () => S.badges[0], '경비원: 북쪽 2번 도로부터는 사계몬이 훨씬 강해져.\n먼저 벚꽃 체육관에서 벚꽃 배지를 따 와!', '경비원: 벚꽃 배지! 북쪽 2번 도로로 가도 좋아.\n북쪽으로 갈수록 사계몬이 강해지니 조심해!', 'guard', 'beotN');
 API.bunsu.ent({ id: 'beotk', kind: 'npc', x: 8, y: 14, dir: 'down', pal: 't2', wander: true, lines: ['벚꽃 체육관 관장 하람은 봄꽃을 정말 좋아해!', '풀숲에서 사계몬을 만나면 문제를 맞혀야 기술을 쓸 수 있어.', '회복소에서 쉬면 사계몬이 모두 건강해져!'] });
